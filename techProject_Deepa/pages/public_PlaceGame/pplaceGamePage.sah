@@ -1,0 +1,56 @@
+_include("pplaceGamePage_AR.sah");
+
+//test data for office questions, answers, scoring points
+//add data in format ['question', 'answer 1', 'answer 2', 'correct answer', 'Score']
+//var $officeQA1 = ['Your coworker Markus, is constantly coughing in the office, what do you do?', 'Use your superhero Social Distance and notify your Manager.', 'Keep it to yourself, do not draw attention, and pretend you did not notice!', 'Use your superhero Social Distance and notify your Manager.', '100'];
+//var $officeQA2 = ['Mary from HR, send a memo advising she is ill and everyone should reach her via email, what do you do?', 'Use your superhero Social Distancing, notify your Manager and recommend she should be working from home.', 'Email Mary to see if she needs some help, and bring her a nice warm cup of tea, so she can feel better!', 'Use your superhero Social Distancing, notify your Manager and recommend she should be working from home.', '90'];
+//var $officeQA3 = ['Your Manager Alex, tells you his partner recently came back from overseas, and is seen constantly sneezing during the day, what do you do?', 'Comfort your Manager, and assure him it is only natural to have a seasonal cold this time of the year.', 'Use your superhero Social Distance, advise your Manager of the risk and that his partner should be seeking medical advice.', 'Use your superhero Social Distance, advise your Manager of the risk and that his partner should be seeking medical advice.', '80'];
+//var $allOfficeQA = [$officeQA1, $officeQA2, $officeQA3];
+
+/*
+Purpose: To verify objects in start office game pop up
+Input: None
+Created: By Deepa Kiran on 17 Jul 2021
+Last updated on: 
+*/
+function verifyStartPplaceGamePopup()
+{
+	_wait(60000, _isVisible($_IMG_WELCOMEIMG_PPLACEGAME));
+	_assertVisible($_DIV_WELCOMETEXT_PPLACEGAME);
+	_assertVisible($_IMG_WELCOMEIMG_PPLACEGAME);
+	_assertTrue(_getText($_DIV_WELCOMETEXT_PPLACEGAME)=="Where possible, to eliminate the risk of exposure to the COVID-19 virus in public places, public transport should be avoid where reasonable or delivery options considered. If it is not feasible, eliminate the risk of exposure to COVID-19 by using opting for safe home delivery where it's practical.");
+	_assertVisible($_BUTTON_START_PPLACEGAME);
+}
+
+/*
+Purpose: Start office game
+Input: None
+Created: By Deepa Kiran on 17 Jul 2021
+Last updated on: 
+*/
+function startPplaceGame()
+{
+	_wait(60000, _isVisible($_IMG_WELCOMEIMG_PPLACEGAME));
+	_click($_BUTTON_START_PPLACEGAME);
+}
+
+/*
+Purpose: verify question displayed on screen in public place game is same as given question
+Input: None
+Created: By Deepa Kiran on 17 Jul 2021
+Last updated on: 
+*/
+function verifyPplaceQuestionOnScreen($question)
+{
+	var $questionOnScreen = _getText($_PARAGRAPH_PPLACEQUESTION);
+	_log("question on screen: " + $questionOnScreen.trim());
+	_log("given question: " + $question);
+	_assertTrue($questionOnScreen.toUpperCase() == $question.toUpperCase());
+}
+
+
+
+
+	
+
+

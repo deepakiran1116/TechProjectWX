@@ -1,0 +1,184 @@
+_include("officeGamePage_AR.sah");
+
+//test data for office questions, answers, scoring points
+//add data in format ['question', 'answer 1', 'answer 2', 'correct answer', 'Score']
+var $officeQA1 = ['Your coworker Markus, is constantly coughing in the office, what do you do?', 'Use your superhero Social Distance and notify your Manager.', 'Keep it to yourself, do not draw attention, and pretend you did not notice!', 'Use your superhero Social Distance and notify your Manager.', '100'];
+var $officeQA2 = ['Mary from HR, send a memo advising she is ill and everyone should reach her via email, what do you do?', 'Use your superhero Social Distancing, notify your Manager and recommend she should be working from home.', 'Email Mary to see if she needs some help, and bring her a nice warm cup of tea, so she can feel better!', 'Use your superhero Social Distancing, notify your Manager and recommend she should be working from home.', '90'];
+var $officeQA3 = ['Your Manager Alex, tells you his partner recently came back from overseas, and is seen constantly sneezing during the day, what do you do?', 'Comfort your Manager, and assure him it is only natural to have a seasonal cold this time of the year.', 'Use your superhero Social Distance, advise your Manager of the risk and that his partner should be seeking medical advice.', 'Use your superhero Social Distance, advise your Manager of the risk and that his partner should be seeking medical advice.', '80'];
+var $allOfficeQA = [$officeQA1, $officeQA2, $officeQA3];
+
+/*
+Purpose: To verify objects in start office game pop up
+Input: None
+Created: By Deepa Kiran on 17 Jul 2021
+Last updated on: 
+*/
+function verifyStartOfficeGamePopup()
+{
+	_wait(60000, _isVisible($_IMG_WELCOMEIMG_OFFICEGAME));
+	_assertVisible($_DIV_WELCOMETEXT_OFFICEGAME);
+	_assertVisible($_IMG_WELCOMEIMG_OFFICEGAME);
+	_assertTrue(_getText($_DIV_WELCOMETEXT_OFFICEGAME)=="Where possible, to eliminate the risk of exposure to the COVID-19 virus in the workplace, businesses may allow their workers to work from home in complete isolation from others. If it is not feasible for workers to perform their job from home, employers must do all that they can to minimise the risk of exposure to COVID-19 so far as reasonably practicable.");
+	_assertVisible($_BUTTON_START_OFFICEGAME);
+}
+
+/*
+Purpose: Start office game
+Input: None
+Created: By Deepa Kiran on 17 Jul 2021
+Last updated on: 
+*/
+function startOfficeGame()
+{
+	_wait(60000, _isVisible($_IMG_WELCOMEIMG_OFFICEGAME));
+	_click($_BUTTON_START_OFFICEGAME);
+}
+
+/*
+Purpose: Verify correct question and answer combination is showing for office game
+Input: None
+Created: By Deepa Kiran on 17 Jul 2021
+Last updated on: 
+*/
+function verifyOfficeQAData()
+{
+	try
+	{
+		var $questionOnScreen = _getText($_PARAGRAPH_OFFICEQUESTION);
+		var $ans1OnScreen = _getText($_LINK_OFFICEANSWER1);
+		var $ans2OnScreen = _getText($_LINK_OFFICEANSWER2);
+		var $questionInData="", $answer1InData="", $answer2InData="", $found=0;
+		for(var $i=0;$i<$allOfficeQA.length;$i++)
+		{
+			$questionInData = $allOfficeQA[$i][0];
+			if($questionOnScreen.toString().trim() == $questionInData.trim())
+			{
+				$answer1InData = $allOfficeQA[$i][1];
+				if($answer1InData.toString() == $ans1OnScreen.toString())
+					$found++;
+				$answer2InData = $allOfficeQA[$i][2];
+				if($answer2InData.toString() == $ans2OnScreen.toString())
+				$found++;
+			}
+		}
+		_assertTrue($found==2, "Give question and answer combination found in data");
+	}
+	catch($e)
+	{
+		_logException($e);
+		_stop();
+	}
+}
+
+/*
+Purpose: get question displayed on screen in office game
+Input: None
+Created: By Deepa Kiran on 17 Jul 2021
+Last updated on: 
+*/
+function getOfficeQuestionOnScreen()
+{
+	var $questionOnScreen = _getText($_PARAGRAPH_OFFICEQUESTION);
+	_log($questionOnScreen.trim());
+	return $questionOnScreen.trim();
+}
+
+/*
+Purpose: verify question displayed on screen in OFFICE game is same as given question
+Input: None
+Created: By Deepa Kiran on 17 Jul 2021
+Last updated on: 
+*/
+function verifyOfficeQuestionOnScreen($question)
+{
+	var $questionOnScreen = _getText($_PARAGRAPH_OFFICEQUESTION);
+	_log("question on screen: " + $questionOnScreen.trim());
+	_log("given question: " + $question);
+	_assertTrue($questionOnScreen.toUpperCase() == $question.toUpperCase());
+}
+
+/*
+Purpose: get answers displayed on screen in office game
+Input: None
+Created: By Deepa Kiran on 16 Jul 2021
+Last updated on: 
+*/
+function getOfficeAnswersOnScreen()
+{
+	var $answers=[];
+	$answers[0] = _getText($_LINK_OFFICEANSWER1).trim();
+	$answers[1] = _getText($_LINK_OFFICEANSWER2).trim();
+	_log($answers);
+	return $answers;
+}
+
+/*
+Purpose: get right or wrong answer for given question in office game. 
+Input: Question to which you need to know answer, correct answer or wrong answer
+Created: By Deepa Kiran on 16 Jul 2021
+Last updated on: 
+*/
+function getAnswerToOfficeQuestion($question, $answers, $answerType)
+{
+	var $questionInData="", $answer1InData="", $answer2InData="", $correctAnswer="", $answer="";
+	for(var $i=0;$i<$allOfficeQA.length;$i++)
+	{
+		$questionInData = $allOfficeQA[$i][0];
+		if($question.toString().trim() == $questionInData.trim())
+		{
+			$answer1InData = $allOfficeQA[$i][1];
+			$answer2InData = $allOfficeQA[$i][2];
+			$correctAnswer = $allOfficeQA[$i][3];
+			if($answer1InData==$answers[0] && $answer2InData==$answers[1])
+			{
+				if($answerType==null || $answerType=="" || $answerType.toString().toUpperCase()=="RIGHT")
+				{
+					$answer = $correctAnswer;
+				}
+				else 
+				{
+					if($correctAnswer==$answer1InData)
+						$answer= $answer2InData;
+					else
+						$answer= $answer1InData;
+				}
+				break;
+			}
+		}
+	}
+	_log($answerType + " answer for given question is: " + $answer);
+	return $answer;
+}
+
+/*
+Purpose: get score for the given question  
+Input: Question to which you need to know the score
+Created: By Deepa Kiran on 16 Jul 2021
+Last updated on: 
+*/
+function getScoreToOfficeQuestion($question, $answers)
+{
+	var $questionInData="", $answer1InData="", $answer2InData="", $score="";
+	for(var $i=0;$i<$allOfficeQA.length;$i++)
+	{
+		$questionInData = $allOfficeQA[$i][0];
+		if($question.toString().trim() == $questionInData.trim())
+		{
+			$answer1InData = $allOfficeQA[$i][1];
+			$answer2InData = $allOfficeQA[$i][2];
+			if($answer1InData==$answers[0] && $answer2InData==$answers[1])
+			{
+				$score = $allOfficeQA[$i][4];
+				break;
+			}
+		}
+	}
+	_log("score for given answer-answer combination is: " + $score);
+	return $score;
+}
+
+
+
+	
+
+

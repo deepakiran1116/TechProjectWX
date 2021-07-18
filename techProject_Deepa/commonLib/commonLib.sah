@@ -1,0 +1,303 @@
+_include("commonLib_AR.sah");
+
+/*
+Purpose: To verify scrolling div on any page showing given scrolling texts
+Input: Array of scrolling texts
+Created: By Deepa Kiran on 16 Jul 2021
+Last updated on: 
+*/
+function verifyScrollingText($divLocator, $textArray)
+{
+	for(var $i=0;$i<$textArray.length;$i++)
+	{
+		_assertContainsText($textArray[$i], $divLocator);
+	}
+}
+
+/*
+Purpose: Wait till timeout popup appears on screen (witout answering the questions in the game)
+Input: 
+Created: By Deepa Kiran on 16 Jul 2021
+Last updated on: 
+*/
+function waitForTimeout()
+{
+	_wait(60000, _isVisible($_IMG_TIMEOUT));
+}
+
+/*
+Purpose: To verify all objects showing correctly on timeout popup
+Input: 
+Created: By Deepa Kiran on 16 Jul 2021
+Last updated on: 
+*/
+function verifyTimeOutPopup()
+{
+	_assertVisible($_IMG_TIMEOUT);
+	_assertVisible($_HEADING_TIMEOUT);
+	_assertVisible($_DIV_TIMEOUTTEXT);
+	_assertVisible($_SAFEAUSLINK_TIMEOUT);
+	_assertVisible($_BUTTON_TRYAGAIN_TIMEOUT);
+	_assertVisible($_BUTTON_RETURNHOME_TIMEOUT);
+}
+
+
+/*
+Purpose: Click on "Try again" button in timeout popup
+Input: 
+Created: By Deepa Kiran on 16 Jul 2021
+Last updated on: 
+*/
+function tryAgainAfterTimeout()
+{
+	_click($_BUTTON_TRYAGAIN_TIMEOUT);
+}
+
+/*
+Purpose: Click on "Return home" button in timeout popup
+Input: 
+Created: By Deepa Kiran on 16 Jul 2021
+Last updated on: 
+*/
+function returnHomeAfterTimeout()
+{
+	_click($_BUTTON_RETURNHOME_TIMEOUT);
+	_assertVisible($_PARAGRAPH_GAMESTART);
+	_assertVisible($_IMG_COVIDWORLDMAP);
+}
+
+/*
+Purpose: Verify all objects are showing correctly in right answer pop up that appears when user selects right answer for a question. This is common function for all game types
+Input: Warrior name and expected score for the answered question to verify message in popup, game type (bus, office or public place)
+Created: By Deepa Kiran on 16 Jul 2021
+Last updated on: 
+*/
+function verifyRightAnswerPopup($warriorName, $score, $gameType)
+{
+	try
+	{
+		_assertVisible($_HEADING_RIGHTANS);
+		if(!(_isVisible($_HEADING_RIGHTANS)))
+			_click(_link("does not exts"));
+		_assertTrue(_getText($_PARAGRAPH_SCORE_RIGHTANS) == $warriorName.trim() + " you have scored " + $score.trim() + " points!");
+		if($gameType==null || $gameType=="" || $gameType.toUpperCase().indexOf("BUS")>=0 || $gameType.toUpperCase().indexOf("PLACE")>=0 || $gameType.toUpperCase().indexOf("RESTAURANT")>=0)
+		{
+			_assertVisible($_DIV_RIGHTANSTEXT);
+			_assertVisible($_IMG_WORKATHOME_RIGHTANS);
+		}
+		else if($gameType.toUpperCase().indexOf("OFFICE")>=0)
+		{
+			_assertVisible($_DIV_RIGHTANSTEXT_OFFICE);
+			_assertVisible($_IMG_WORKATHOME_RIGHTANS_OFFICE);
+		}
+		_assertVisible($_BUTTON_TRYNEXTBATTLE);
+		_assertVisible($_BUTTON_CHECKFINALSCORE);
+		return $score;
+	}
+	catch($e)
+	{
+		_logException($e);
+		$score=0;
+		return $score;
+	}
+}
+
+/*
+Purpose: Verify all objects are showing correctly in wrong answer pop up that appears when user selects wrong answer for a question. This is common function for all game types
+Input: game type (bus, office or public place)
+Created: By Deepa Kiran on 16 Jul 2021
+Last updated on: 17 Jul 2021
+*/
+function verifyWrongAnswerPopup($gameType)
+{
+	try
+	{
+		_assertVisible($_IMG_SNEEZE_WRONGANS);
+		_assertVisible($_HEADING_WRONGANS);
+		_assertVisible($_DIV_WRONGANSTEXT);
+		_assertVisible($_SAFEAUSLINK_WRONGANS);
+		_assertVisible($_BUTTON_TRYAGAIN_WRONGANS);
+		if(!(_isVisible($_HEADING_WRONGANS)) || !(_isVisible($_DIV_WRONGANSTEXT)))
+			_click(_link("does not exts"));
+	}
+	catch($e)
+	{
+		_logException($e);
+		_navigateTo("https://responsivefight.herokuapp.com/covid");
+		if($gameType.toUpperCase().indexOf("BUS")>=0)
+		{
+			selectBusGame();
+			startBusGame();
+		}
+		if($gameType.toUpperCase().indexOf("OFFICE")>=0)
+		{
+			selectOfficeGame();
+			startOfficeGame();
+		}
+	}
+	
+}
+
+/*
+Purpose: Click on "try again" button in wrong answer popup
+Input: 
+Created: By Deepa Kiran on 16 Jul 2021
+Last updated on: 17 Jul 2021
+*/
+function tryAgainAfterWrongAnswer()
+{
+	_click($_BUTTON_TRYAGAIN_WRONGANS);
+}
+
+/*
+Purpose: Click on "Try next battle" button in right answer popup
+Input: 
+Created: By Deepa Kiran on 16 Jul 2021
+Last updated on: 
+*/
+function gotoTryNextBattle()
+{
+	_click($_BUTTON_TRYNEXTBATTLE);
+}
+
+/*
+Purpose: Click on "Check final score" link that shows when a battle ground is completed
+Input: 
+Created: By Deepa Kiran on 17 Jul 2021
+Last updated on:
+*/
+function gotoCheckFinalScorePage()
+{
+	try
+	{
+		_click($_BUTTON_CHECKFINALSCORE);
+		_assertVisible($_PARAGRAPH_LEADERBOARDHEADING);
+		if(!(_isVisible($_PARAGRAPH_LEADERBOARDHEADING)))
+			_click(_link("does not exists"));
+	}
+	catch($e)
+	{
+		_logException($e);
+		_navigateTo("https://responsivefight.herokuapp.com/leaderboard");	
+	}
+}
+
+/*
+Purpose: Math function to add up all given scores
+Input: scores in an array
+Created: By Deepa Kiran on 17 Jul 2021
+Last updated on:
+*/
+function calcTotalScore($scoreArray)
+{
+	_log("Given scores: " + $scoreArray);
+	var $score, $total=0;
+	for(var $i=0;$i<$scoreArray.length;$i++)
+	{
+		$score = $scoreArray[$i];
+		$total = $total + parseInt($score);
+	}
+	_log("total is: " + $total);
+	return $total;
+}
+
+/*
+Purpose: to generate random number of given no.of digits
+Input: No of digits you want to generate.
+Created: By Deepa Kiran on 17 Jul 2021
+Last updated:
+*/
+function generateRandomNumber($digits)
+{
+	if ($digits == null || $digits == "")
+		$digits = 1;
+	var $num = 1;
+	for(var $i=1;$i<=$digits;$i++)
+	{
+		$num = $num + "0";
+	}
+	var $randomNum = Math.floor((Math.random() * $num) + 1);
+	_log($randomNum);
+	return $randomNum;
+}
+
+/*
+Purpose: select given answer on screen
+Input: $answer to be selected
+Created: By Deepa Kiran on 17 Jul 2021
+Last updated:
+*/
+function selectAnswer($answer)
+{
+	try
+	{
+		_click(_link($answer));
+//		if($answer=="Check your score")
+//		{
+//			_assertVisible($_PARAGRAPH_LEADERBOARDHEADING)
+//		}
+//		else
+//		{
+			_assertTrue(_isVisible($_HEADING_RIGHTANS) || _isVisible($_HEADING_WRONGANS));
+			if(!(_isVisible($_HEADING_RIGHTANS)) || !(_isVisible($_HEADING_WRONGANS)))
+				_click($_HEADING_RIGHTANS);
+//		}
+	}
+	catch($e)
+	{
+		_logException($e);
+	}
+}
+
+/*
+Purpose: Click on Check your score link when all a battle field is complete
+Input: 
+Created: By Deepa Kiran on 17 Jul 2021
+Last updated:
+*/
+function checkYourScore()
+{
+	_click(_link("Check your score"));
+	_assertVisible($_PARAGRAPH_LEADERBOARDHEADING);
+}
+
+/*
+Purpose: To click cross button on top right corner of right answer pop up to close it
+Input: 
+Created: By Deepa Kiran on 17 Jul 2021
+Last updated:
+*/
+function closeRightAnswerPopup()
+{
+	_click($_SPAN_CROSS_RIGHTANS);
+}
+
+/*
+Purpose: To click cross button on top right corner of wrong answer pop up to close it
+Input: 
+Created: By Deepa Kiran on 17 Jul 2021
+Last updated:
+*/
+function closeWrongAnswerPopup()
+{
+	_click($_SPAN_CROSS_WRONGANS);
+}
+/*
+Purpose: To get domain in url opened in browser
+Input: 
+Created: By Deepa Kiran on 17 Jul 2021
+Last updated:
+*/
+function getDomainURL()
+{
+	var $url;
+ 	_set($url, window.location.href);
+	_log("URL is: " + $url);
+	var $domain = $url.substring(0, $url.lastIndexOf("/")+1);
+	_log($domain);
+	return $domain;
+}
+
+//verifyHomePage("COVID-19 THE GAME", "The world has been taken over by super villain COVID19 and we need our super heroes to come to the rescue. We need to combat this great threat, so I am looking to recruit a team of Super Heroes and build the CURE team. I am in search of heroes like The HandWasher, Invisible Distance, SOAP, WFH, and any other great warriors against COVID19, until CURE arrives to the rescue.");
+//createWarrior("Jenna");
+//verifyGameStartPage(['Regularly and thoroughly clean your hands with an alcohol-based hand rub or wash them with soap and water.', 'Maintain at least 1 metre (3 feet) distance between yourself and others.', 'Avoid going to crowded places. Avoid touching eyes, nose and mouth.', 'Stay home and self-isolate even with minor symptoms such as cough, headache, mild fever, until you recover.', 'Keep up to date on the latest information from trusted sources.', 'Visit WHO.int for more information.']);

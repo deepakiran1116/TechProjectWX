@@ -1,0 +1,76 @@
+_include ("../pages/scorePage/scorePage.sah");
+_include ("../commonLib/commonLib.sah");
+_include ("../pages/office_OfficeGame/officeGamePage.sah");
+_include ("../pages/covid_GameStartPage/covidPage.sah");
+_include ("../pages/homePage/homePage.sah");
+
+var $userId="", $warriorName="";
+
+function generateWarriorName($name)
+{
+	var $ranNum = generateRandomNumber(2);
+	var $warriorName= $name + $ranNum;
+	_log("Warrior name: " +	$warriorName);
+	return $warriorName;
+}
+
+function testOfficeGame_wrongAnswers_closePopup($warriorName)
+{
+	var $que, $answers, $ans;
+	//start office game
+	selectOfficeGame();
+	startOfficeGame();
+	verifyOfficeQAData();
+	//get wrong answer for the question from data and select answer
+	$que = getOfficeQuestionOnScreen();
+	$answers = getOfficeAnswersOnScreen();
+	$ans = getAnswerToOfficeQuestion($que, $answers, "Wrong");
+	selectAnswer($ans);
+	verifyWrongAnswerPopup("office");
+	//close wrong popup
+	closeWrongAnswerPopup();
+	//verify same question on screen and select same wrong answer
+	verifyOfficeQuestionOnScreen($que);
+	//navigate to leader board
+	var $domain=getDomainURL();
+	_navigateTo($domain+"leaderboard");
+	//verify score is zero
+	$userId = getLatestUserIdForName($warriorName);
+	verifyScore($userId, $warriorName, "0");
+}
+
+function testOfficeGame_wrongAnswers_tryAgain($warriorName)
+{
+	var $que, $answers, $ans;
+	//start office game
+	selectOfficeGame();
+	startOfficeGame();
+	verifyOfficeQAData();
+	//get wrong answer for the question from data and select answer
+	$que = getOfficeQuestionOnScreen();
+	$answers = getOfficeAnswersOnScreen();
+	$ans = getAnswerToOfficeQuestion($que, $answers, "Wrong");
+	selectAnswer($ans);
+	verifyWrongAnswerPopup("office");
+	//try again
+	tryAgainAfterWrongAnswer();
+	//verify same question on screen and select same wrong answer
+	verifyOfficeQuestionOnScreen($que);
+	//navigate to leader board
+	var $domain=getDomainURL();
+	_navigateTo($domain+"leaderboard");
+	//verify score is zero
+	if($userId=="" || $userId==null)
+		$userId = getLatestUserIdForName($warriorName);
+	verifyScore($userId, $warriorName, "0");
+}
+
+
+
+//var $warriorName = generateWarriorName("Beeoff");
+//createWarrior($warriorName);
+$warriorName = getWarriorName();
+testOfficeGame_wrongAnswers_closePopup($warriorName);
+continueFighting();
+testOfficeGame_wrongAnswers_tryAgain($warriorName);
+continueFighting();

@@ -1,0 +1,23 @@
+//Start game
+var $_PARAGRAPH_GAMESTART = _paragraph("COVID-19 THE GAME");
+var $_IMG_COVIDWORLDMAP = _image("Covid World map", _under(_paragraph("COVID-19 THE GAME")));
+var $_PARAGRAPH_CHOOSEBATTLEFIELD_TEXT = _paragraph("/Choose your battle field/");
+var $_DIV_SCROLLING_GAMESTARTPAGE = _div("tcontainer");
+var $_PARAGRAPH_WELCOMETEXT = _paragraph("welcome_text");
+
+var $_PARAGRAPH_DANGERGAME = _paragraph("Are you sure you know how to keep safe?", _in(_div("/thumbnail/[0]")));
+var $_IMG_DANGERGAME = _image("taped off danger warning area", _in(_div("/thumbnail/[0]")));
+var $_LINK_DANGERGAME = _link("Are you game?", _in(_div("/thumbnail/[0]")));
+
+var $_PARAGRAPH_BUSGAME = _paragraph("You need to go somewhere important so you jump in the bus.", _in(_div("/thumbnail/[1]")));
+var $_IMG_BUSGAME = _image("Bus", _in(_div("/thumbnail/[1]")));
+var $_LINK_BUSGAME = _link("Take the bus", _in(_div("/thumbnail/[1]")));
+
+var $_PARAGRAPH_PPLACEGAME = _paragraph("Lockdown rules have been eased and you go out.", _in(_div("/thumbnail/[2]")));
+var $_IMG_PPLACEGAME = _image("public place", _in(_div("/thumbnail/[2]")));
+var $_LINK_PPLACEGAME = _link("Go to a public place", _in(_div("/thumbnail/[2]")));
+
+var $_PARAGRAPH_OFFICEGAME = _paragraph("You are still required to attend your workplace.", _in(_div("/thumbnail/[3]")));
+var $_IMG_OFFICEGAME = _image("Lights", _in(_div("/thumbnail/[3]")));
+var $_LINK_OFFICEGAME = _link("Go to the office", _in(_div("/thumbnail/[3]")));
+

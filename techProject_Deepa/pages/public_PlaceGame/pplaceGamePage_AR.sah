@@ -1,0 +1,13 @@
+//Start game popup
+var $_DIV_WELCOMEHEADER_PPLACEGAME = _div("/You are seated at a restaurant../", _in(_div("modal-content")));
+var $_IMG_WELCOMEIMG_PPLACEGAME = _image("public place", _in(_div("modal-content")));
+var $_DIV_WELCOMETEXT_PPLACEGAME = _div("modal-body", _in(_div("modal-content")));
+var $_BUTTON_START_PPLACEGAME = _button("Start", _in(_div("modal-content")));
+
+//time out
+//var $_DIV_PPLACETIMEOUT = _div("office_out_of_time_modal");
+
+//Questions and Answers
+var $_PARAGRAPH_PPLACEQUESTION = _paragraph("restaurant_question_1");
+var $_LINK_PPLACEANSWER1 = _link("restaurant_answer_1");
+var $_LINK_PPLACEANSWER2 = _link("restaurant_answer_2");

@@ -1,0 +1,44 @@
+_include ("../pages/scorePage/scorePage.sah");
+_include ("../commonLib/commonLib.sah");
+_include ("../pages/office_OfficeGame/officeGamePage.sah");
+_include ("../pages/covid_GameStartPage/covidPage.sah");
+_include ("../pages/homePage/homePage.sah");
+
+var $warriorName="";
+function testAllOfficeQuestions($name)
+{
+	var $totalScore=0;
+	var $que, $answers, $ans, $score, $userId="";
+	for(var $i=0;$i<=$allOfficeQA.length;$i++)
+	{
+		//start office game
+		selectOfficeGame();
+		startOfficeGame();
+		if($i==$allOfficeQA.length)
+		{
+			$que = getOfficeQuestionOnScreen();
+			_assertTrue($que == "You have completed this battleground");
+			checkYourScore();
+			verifyScore($userId, $warriorName, $totalScore);
+			break;
+		}
+		verifyOfficeQAData();
+		//get right answer for the question from data and select answer
+		$que = getOfficeQuestionOnScreen();
+		$answers = getOfficeAnswersOnScreen();
+		$ans = getAnswerToOfficeQuestion($que, $answers, "Right");
+		$score = getScoreToOfficeQuestion($que, $answers);
+		selectAnswer($ans);
+		$score = verifyRightAnswerPopup($warriorName, $score, "office");
+		gotoCheckFinalScorePage();
+		if($i==0)
+			$userId = getLatestUserIdForName($warriorName);
+		$totalScore = $totalScore + parseInt($score);
+		verifyScore($userId, $warriorName, $totalScore);
+		continueFighting();
+		
+	}
+
+}
+$warriorName = getWarriorName();
+testAllOfficeQuestions("Beeoff");

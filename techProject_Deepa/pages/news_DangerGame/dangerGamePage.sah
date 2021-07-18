@@ -1,0 +1,97 @@
+_include("commonLib_AR.sah");
+
+/*
+Purpose: To verify all objects on home page
+Input: Header text and Introduction text
+Created: By Deepa Kiran on 16 Jul 2021
+Last updated on: 
+*/
+function verifyHomePage($header, $introText)
+{
+	_windowAction("maximize");
+	_wait(30000, _isVisible($_IMG_WHO_HOMEPAGE));
+	//verify Anime header and its content on home page
+	_assertTrue(_getText($_DIV_ANIMEHEADER) == " "+$header+" ");
+	_assertContainsText($header, $_DIV_ANIMEHEADER);
+	_assertVisible($_IMG_MATERIALICON_LEFT);
+	_assertVisible($_IMG_MATERIALICON_RIGHT);
+	//verify border text & WHO image below anime header on home page
+	_assertTrue(_getText($_PARAGRAPH_BLOCKBORDERTEXT) == $introText);
+	_assertVisible($_IMG_WHO_HOMEPAGE);
+	//Verify objects exists for creating warrior
+	_assertVisible($_HEADER_TELLNAME);
+	_assertVisible($_TEXTBOX_WARRIORNAME);
+	_assertVisible($_LINK_CREATEWARRIOR);
+	//Verify footer text with link
+	_assertVisible($_LINK_TEXT_FOOTER);
+}
+
+/*
+Purpose: To Create warrior and verify user navigated to start game page
+Input: Warrior name
+Created: By Deepa Kiran on 16 Jul 2021
+Last updated on: 
+*/
+function createWarrior($warriorName)
+{
+	//Create warrior
+	_setValue($_TEXTBOX_WARRIORNAME, $warriorName);
+	_click($_LINK_CREATEWARRIOR);
+	_assertVisible(_link("Start your journey "+ $warriorName));
+	_click($_LINK_STARTJOURNEY);
+	//verify user navigated to next game start page
+	_assertVisible($_PARAGRAPH_GAMESTART);
+	_assertVisible(_paragraph("Choose your battle field "+$warriorName));
+}
+
+/*
+Purpose: To verify all objects on Game start page
+Input: Array of texts in scrolling div
+Created: By Deepa Kiran on 16 Jul 2021
+Last updated on: 
+*/
+function verifyGameStartPage($scrollingTextArray)
+{
+	//verify images on text on page
+	_assertVisible($_PARAGRAPH_GAMESTART);
+	_assertVisible($_IMG_COVIDWORLDMAP);
+	_assertVisible($_PARAGRAPH_CHOOSEBATTLEFIELD_TEXT);
+	//verify scrolling text
+	verifyScrollingText($_DIV_SCROLLING_GAMESTARTPAGE, $scrollingTextArray);
+	//verify objects in first danger game	
+	_assertVisible($_PARAGRAPH_DANGERGAME);
+	_assertVisible($_IMG_DANGERGAME);
+	_assertVisible($_LINK_DANGERGAME);
+	//verify objects in bus game
+	_assertVisible($_PARAGRAPH_BUSGAME);
+	_assertVisible($_IMG_BUSGAME);
+	_assertVisible($_LINK_BUSGAME);
+	//verify objects in public place game
+	_assertVisible($_PARAGRAPH_PPLACEGAME);
+	_assertVisible($_IMG_PPLACEGAME);
+	_assertVisible($_LINK_PPLACEGAME);
+	//verify objects in office game
+	_assertVisible($_PARAGRAPH_OFFICEGAME);
+	_assertVisible($_IMG_OFFICEGAME);
+	_assertVisible($_LINK_OFFICEGAME);
+}
+
+/*
+Purpose: To verify scrolling div on any page showing given scrolling texts
+Input: Array of scrolling texts
+Created: By Deepa Kiran on 16 Jul 2021
+Last updated on: 
+*/
+function verifyScrollingText($divLocator, $textArray)
+{
+	for(var $i=0;$i<$textArray.length;$i++)
+	{
+		_assertContainsText($textArray[$i], $divLocator);
+	}
+}
+
+
+
+verifyHomePage("COVID-19 THE GAME", "The world has been taken over by super villain COVID19 and we need our super heroes to come to the rescue. We need to combat this great threat, so I am looking to recruit a team of Super Heroes and build the CURE team. I am in search of heroes like The HandWasher, Invisible Distance, SOAP, WFH, and any other great warriors against COVID19, until CURE arrives to the rescue.");
+createWarrior("Jenna");
+verifyGameStartPage(['Regularly and thoroughly clean your hands with an alcohol-based hand rub or wash them with soap and water.', 'Maintain at least 1 metre (3 feet) distance between yourself and others.', 'Avoid going to crowded places. Avoid touching eyes, nose and mouth.', 'Stay home and self-isolate even with minor symptoms such as cough, headache, mild fever, until you recover.', 'Keep up to date on the latest information from trusted sources.', 'Visit WHO.int for more information.']);

@@ -1,0 +1,91 @@
+_include("covidPage_AR.sah");
+
+/*
+Purpose: To verify all objects on Game start page
+Input: Array of texts in scrolling div
+Created: By Deepa Kiran on 16 Jul 2021
+Last updated on: 
+*/
+function verifyGameStartPage($scrollingTextArray)
+{
+	//verify images on text on page
+	_assertVisible($_PARAGRAPH_GAMESTART);
+	_assertVisible($_IMG_COVIDWORLDMAP);
+	_assertVisible($_PARAGRAPH_CHOOSEBATTLEFIELD_TEXT);
+	//verify scrolling text
+	verifyScrollingText($_DIV_SCROLLING_GAMESTARTPAGE, $scrollingTextArray);
+	//verify objects in first danger game	
+	_assertVisible($_PARAGRAPH_DANGERGAME);
+	_assertVisible($_IMG_DANGERGAME);
+	_assertVisible($_LINK_DANGERGAME);
+	//verify objects in bus game
+	_assertVisible($_PARAGRAPH_BUSGAME);
+	_assertVisible($_IMG_BUSGAME);
+	_assertVisible($_LINK_BUSGAME);
+	//verify objects in public place game
+	_assertVisible($_PARAGRAPH_PPLACEGAME);
+	_assertVisible($_IMG_PPLACEGAME);
+	_assertVisible($_LINK_PPLACEGAME);
+	//verify objects in office game
+	_assertVisible($_PARAGRAPH_OFFICEGAME);
+	_assertVisible($_IMG_OFFICEGAME);
+	_assertVisible($_LINK_OFFICEGAME);
+}
+
+/*
+Purpose: To click on "Take a bus" buton to start bus game
+Input: 
+Created: By Deepa Kiran on 17 Jul 2021
+Last updated on: 
+*/
+function selectBusGame()
+{
+	_click($_LINK_BUSGAME);
+}
+
+/*
+Purpose: To click on "Go to Public place" buton to start Public place game
+Input: 
+Created: By Deepa Kiran on 17 Jul 2021
+Last updated on: 
+*/
+function selectPublicPlaceGame()
+{
+	_click($_LINK_PPLACEGAME);
+}
+
+/*
+Purpose: To click on "go to office" buton to start office game
+Input: 
+Created: By Deepa Kiran on 17 Jul 2021
+Last updated on: 
+*/
+function selectOfficeGame()
+{
+	_click($_LINK_OFFICEGAME);
+}
+
+/*
+Purpose: To click on "Are you game?" buton to start danger game
+Input: 
+Created: By Deepa Kiran on 17 Jul 2021
+Last updated on: 
+*/
+function selectDangerGame()
+{
+	_click($_LINK_DANGERGAME);
+}
+
+/*
+Purpose: To get warrior name on screen
+Input: 
+Created: By Deepa Kiran on 17 Jul 2021
+Last updated on: 
+*/
+function getWarriorName()
+{
+	var $welcomeText = _getText($_PARAGRAPH_WELCOMETEXT);
+	var $name = $welcomeText.substring($welcomeText.indexOf("Choose your battle field ")+25, $welcomeText.length);
+	_log("Warrior name on screen: "+$name);
+	return $name;
+}

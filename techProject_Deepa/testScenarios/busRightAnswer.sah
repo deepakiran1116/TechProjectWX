@@ -1,0 +1,40 @@
+//_include ("../pages/scorePage/scorePage.sah");
+_include ("../commonLib/commonLib.sah");
+_include ("../pages/bus_BusGame/busGamePage.sah");
+_include ("../pages/covid_GameStartPage/covidPage.sah");
+//_include ("../pages/homePage/homePage.sah");
+
+/*
+Purpose: To Start bus game by clicking on "Start button" and enter right answer to question and verify right answer popup and the score showing in popup
+Input: Warrior name
+Created: by deepa Kiran on 17 Jul 2021
+*/
+function testBusQuestion_rightAnswer($warriorName)
+{
+	var $totalScore=0;
+	var $que, $answers, $ans, $score, $userId="";
+	//start game
+	startBusGame();
+	verifyBusQAData();
+	//get right answer for the question from data and select answer
+	$que = getBusQuestionOnScreen();
+	$answers = getBusAnswersOnScreen();
+	$ans = getAnswerToBusQuestion($que, $answers, "Right");
+	$score = getScoreToBusQuestion($que, $answers);
+	selectAnswer($ans);
+	$score = verifyRightAnswerPopup($warriorName, $score, "bus");
+	return $score;
+}
+
+/*
+Purpose: To test battle completion page, and verify "check your score" navigates to leaderboard page
+Input:None
+Created: by deepa Kiran on 18 Jul 2021
+*/
+function testBattleCompletePage_busGame()
+{
+	_assertEqual("You have completed this battleground", _getText($_PARAGRAPH_BUSQUESTION));
+	_assertEqual("Check your score", _getText($_LINK_BUSANSWER1));
+	_assertNotVisible($_LINK_BUSANSWER2, "Second answer showing when battleground is completed");
+	checkYourScore();
+}

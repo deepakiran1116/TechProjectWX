@@ -1,0 +1,13 @@
+//Start game popup
+var $_DIV_WELCOMEHEADER_OFFICEGAME = _div("/You have entered the office../", _in(_div("modal-content")));
+var $_IMG_WELCOMEIMG_OFFICEGAME = _image("working at home", _in(_div("modal-content")));
+var $_DIV_WELCOMETEXT_OFFICEGAME = _div("modal-body", _in(_div("modal-content")));
+var $_BUTTON_START_OFFICEGAME = _button("Start", _in(_div("modal-content")));
+
+//time out
+var $_DIV_OFFICETIMEOUT = _div("office_out_of_time_modal");
+
+//Questions and Answers
+var $_PARAGRAPH_OFFICEQUESTION = _paragraph("office_question_1");
+var $_LINK_OFFICEANSWER1 = _link("office_answer_1");
+var $_LINK_OFFICEANSWER2 = _link("office_answer_2");

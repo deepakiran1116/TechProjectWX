@@ -1,0 +1,4 @@
+var $_TABLE_LEADERBOARD = _table(0);
+var $_BUTTON_CONTINUEFIGHT = _button("Continue fighting");
+var $_DIV_SCROLLTEXT_SCOREBOARD = _div("ticker-wrap");
+var $_PARAGRAPH_LEADERBOARDHEADING = _paragraph("COVID-19 THE GAME - LEADERBOARD");

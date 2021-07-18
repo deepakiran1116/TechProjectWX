@@ -1,0 +1,17 @@
+//Home Page
+var $_DIV_ANIMEHEADER = _div("anime block");
+var $_IMG_MATERIALICON_LEFT = _italic("material-icons[0]", _in(_paragraph("option-label")));
+var $_IMG_MATERIALICON_RIGHT = _italic("material-icons[1]", _in(_paragraph("option-label")));
+var $_DIV_BLOCKBORDER = _div("block border", _under(_div("anime block")));
+var $_PARAGRAPH_BLOCKBORDERTEXT = _paragraph(0, _in(_div("block border", _under(_div("anime block")))));
+var $_IMG_WHO_HOMEPAGE = _image("WHO announcement", _in(_div("carousel slide", _under(_div("block border")))));
+var $_HEADER_TELLNAME = _heading2("Tell me your warrior name",_under(_div("carousel slide")));
+var $_TEXTBOX_WARRIORNAME = _textbox("worrior_username", _under(_heading2("Tell me your warrior name")));
+var $_LINK_CREATEWARRIOR = _link("Create warrior");
+var $_LINK_TEXT_FOOTER = _link("this project", _in(_paragraph("you can visit this project for more information")));
+
+//create Warrior
+var $_LINK_STARTJOURNEY = _link("/Start your journey/");
+
+//start game page
+var $_PARAGRAPH_GAMESTART = _paragraph("COVID-19 THE GAME");

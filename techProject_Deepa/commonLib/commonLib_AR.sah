@@ -1,0 +1,28 @@
+//Time out popup
+var $_IMG_TIMEOUT = _image("Covid protection poster");
+var $_HEADING_TIMEOUT = _heading5("Time's Up!");
+var $_DIV_TIMEOUTTEXT = _div("You need to take proactive action to eliminate risk of transmission of the COVID-19 virus. For more information about working from home visit https://www.safeworkaustralia.gov.au/covid-19-information-workplaces/working-home.");
+var $_SAFEAUSLINK_TIMEOUT = _link("https://www.safeworkaustralia.gov.au/covid-19-information-workplaces/working-home[2]");
+var $_BUTTON_TRYAGAIN_TIMEOUT = _button("Try again[1]");
+var $_BUTTON_RETURNHOME_TIMEOUT = _button("Return Home");
+
+//Right answer popup
+var $_IMG_WORKATHOME_RIGHTANS = _image("working at home");
+var $_IMG_WORKATHOME_RIGHTANS_OFFICE = _image("working at home[1]");
+var $_HEADING_RIGHTANS = _heading5("That is correct!");
+var $_PARAGRAPH_SCORE_RIGHTANS = _paragraph("score");
+var $_DIV_RIGHTANSTEXT = _div("Eliminate the risk of exposure to the COVID-19 virus by keeping a safe distance, and avoid commuting where possible. For more information about working from home visit https://www.safeworkaustralia.gov.au/covid-19-information-workplaces/working-home .");
+var $_DIV_RIGHTANSTEXT_OFFICE = _div("Eliminate the risk of exposure to the COVID-19 virus by keeping a safe distance, and work if possible. For more information about working from home visit https://www.safeworkaustralia.gov.au/covid-19-information-workplaces/working-home .");
+var $_BUTTON_TRYNEXTBATTLE = _button("Try the next battle");
+var $_BUTTON_CHECKFINALSCORE = _button("Check your final score");
+var $_SPAN_CROSS_RIGHTANS = _span("×[1]");
+
+
+
+//Wrong answer pop up
+var $_IMG_SNEEZE_WRONGANS = _image("sneeze on coworker");
+var $_HEADING_WRONGANS = _heading5("That doesn't sound right!");
+var $_DIV_WRONGANSTEXT =_div("Risk of transmission of the COVID-19 virus can be increased by close proximity, coughing and sneezing, self isolate where posible. For more information about working from home visit https://www.safeworkaustralia.gov.au/covid-19-information-workplaces/working-home.");
+var $_SAFEAUSLINK_WRONGANS = _link("https://www.safeworkaustralia.gov.au/covid-19-information-workplaces/working-home[1]")
+var $_BUTTON_TRYAGAIN_WRONGANS = _button("Try again");
+var $_SPAN_CROSS_WRONGANS = _span("×[2]");

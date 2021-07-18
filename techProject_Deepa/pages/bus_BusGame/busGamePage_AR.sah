@@ -1,0 +1,13 @@
+//Start game popup
+var $_DIV_WELCOMEHEADER_BUSGAME = _div("/You have taken the public bus../", _in(_div("modal-content")));
+var $_IMG_WELCOMEIMG_BUSGAME = _image("taking the bus", _in(_div("modal-content")));
+var $_DIV_WELCOMETEXT_BUSGAME = _div("modal-body", _in(_div("modal-content")));
+var $_BUTTON_START_BUSGAME = _button("Start", _in(_div("modal-content")));
+
+//time out
+var $_DIV_BUSTIMEOUT = _div("bus_out_of_time_modal");
+
+//Questions and Answers
+var $_PARAGRAPH_BUSQUESTION = _paragraph("bus_question_1");
+var $_LINK_BUSANSWER1 = _link("bus_answer_1");
+var $_LINK_BUSANSWER2 = _link("bus_answer_2");

@@ -1,0 +1,46 @@
+_include("homePage_AR.sah");
+
+/*
+Purpose: To verify all objects on home page
+Input: Header text and Introduction text
+Created: By Deepa Kiran on 16 Jul 2021
+Last updated on: 
+*/
+function verifyHomePage($header, $introText)
+{
+	_windowAction("maximize");
+	_wait(30000, _isVisible($_IMG_WHO_HOMEPAGE));
+	//verify Anime header and its content on home page
+	_assertTrue(_getText($_DIV_ANIMEHEADER) == " "+$header+" ");
+	_assertContainsText($header, $_DIV_ANIMEHEADER);
+	_assertVisible($_IMG_MATERIALICON_LEFT);
+	_assertVisible($_IMG_MATERIALICON_RIGHT);
+	//verify border text & WHO image below anime header on home page
+	_assertTrue(_getText($_PARAGRAPH_BLOCKBORDERTEXT) == $introText);
+	_assertVisible($_IMG_WHO_HOMEPAGE);
+	//Verify objects exists for creating warrior
+	_assertVisible($_HEADER_TELLNAME);
+	_assertVisible($_TEXTBOX_WARRIORNAME);
+	_assertVisible($_LINK_CREATEWARRIOR);
+	//Verify footer text with link
+	_assertVisible($_LINK_TEXT_FOOTER);
+}
+
+/*
+Purpose: To Create warrior and verify user navigated to start game page
+Input: Warrior name
+Created: By Deepa Kiran on 16 Jul 2021
+Last updated on: 
+*/
+function createWarrior($warriorName)
+{
+	//Create warrior
+	_setValue($_TEXTBOX_WARRIORNAME, $warriorName);
+	_click($_LINK_CREATEWARRIOR);
+	_assertVisible(_link("Start your journey "+ $warriorName));
+	_click($_LINK_STARTJOURNEY);
+	//verify user navigated to next game start page
+	_assertVisible($_PARAGRAPH_GAMESTART);
+	_assertVisible(_paragraph("Choose your battle field "+$warriorName));
+}
+

@@ -1,0 +1,35 @@
+//_include ("../pages/scorePage/scorePage.sah");
+_include ("../commonLib/commonLib.sah");
+_include ("../pages/office_OfficeGame/officeGamePage.sah");
+_include ("../pages/covid_GameStartPage/covidPage.sah");
+//_include ("../pages/homePage/homePage.sah");
+
+function testOfficeQuestion_rightAnswer($warriorName)
+{
+	var $totalScore=0;
+	var $que, $answers, $ans, $score, $userId="";
+	//start game
+	startOfficeGame();
+	verifyOfficeQAData();
+	//get right answer for the question from data and select answer
+	$que = getOfficeQuestionOnScreen();
+	$answers = getOfficeAnswersOnScreen();
+	$ans = getAnswerToOfficeQuestion($que, $answers, "Right");
+	$score = getScoreToOfficeQuestion($que, $answers);
+	selectAnswer($ans);
+	$score = verifyRightAnswerPopup($warriorName, $score, "office");
+	return $score;
+}
+
+/*
+Purpose: To test battle completion page, and verify "check your score" navigates to leaderboard page
+Input:None
+Created: by deepa Kiran on 18 Jul 2021
+*/
+function testBattleCompletePage_officeGame()
+{
+	_assertEqual("You have completed this battleground", _getText($_PARAGRAPH_OFFICEQUESTION));
+	_assertEqual("Check your score", _getText($_LINK_OFFICEANSWER1));
+	_assertNotVisible($_LINK_OFFICEANSWER2, "Second answer showing when battleground is completed");
+	checkYourScore();
+}

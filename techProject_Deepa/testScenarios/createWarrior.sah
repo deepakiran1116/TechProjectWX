@@ -1,0 +1,14 @@
+_include ("../commonLib/commonLib.sah");
+_include ("../pages/homePage/homePage.sah");
+
+var $warriorName="";
+function generateWarriorName($partName)
+{
+	var $ranNum = generateRandomNumber(2);
+	var $warriorName= $partName + $ranNum;
+	_log("Warrior name: " +	$warriorName);
+	return $warriorName;
+}
+_windowAction("maximize");
+$warriorName=generateWarriorName("Beeoff");
+createWarrior($warriorName);

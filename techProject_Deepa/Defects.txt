@@ -1,0 +1,78 @@
+First game not working right - 
+----------------------------
+No text in options, 
+does not navigate to danger game when user moves to next question, 
+image broken in start pop up
+selecting second answer taking to home page
+
+Bus Game
+---------
+When selected correct answer but click on X in popup instead of "Try next question" or "Check score" then, timer stops, if the correct answer is selected again , it shows wrong answer pop up. Click on try again too does not do any thing nor time is up - BLOCKER
+When one answer is not selectable and user returned to home, the same question does not show again
+
+Office Game
+---------
+When selected correct answer but click on X in popup instead of "Try next question" or "Check score" then, timer stops
+Text in right answer popup
+
+Common: 
+-------
+There is timer not required when questions are over when user is prompted to check score
+there is another button/link below check score when question are over - 
+clicking this link say wrong answer while there is no question at all, 
+Also, when clicks on blank link below check score, it shows "not sounds right". if user clicks on check score now, it shows "not sound right" and then goes to scrore page - this issue is with restaurent and office. It happens whenever user clicks on atleast once wrong answer.
+If big warrior name is entered, it does not show in score page
+
+
+Improvements
+-------------
+When there are no questions, no need to show start game pop up
+No way to play only one game
+Pressing Enter after entering warrior name is working
+If times out, not showing any pop up or logged out but showing blank question
+No need to show timeout popup when questions are over and asked to check score
+
+
+Game Questions
+--------------
+You must travel to buy food and medical supplies? - 100
+Use your superheroes Mask and sanitizer while traveling on public transport and clean your hands regularly.
+Please consider travelling during peak times, when more help is available to you
+
+Someone sits next you, and is beginning to cough, what do you do? - 90
+User your superheroes "Punch" and keep it to yourself
+Move to another seat immediately and report it to the driver!
+
+You must travel to buy food and medical supplies? - 80
+Cover any sneezes or coughs with your superhero inner elbow or with a tissue that is then discarded.
+Cover any sneezes or coughs with your hand and clean it under the sit where no one will notice.
+
+
+
+
+You notice a large group of people waiting in line next to each other at a restaurant, what do you do? - 100
+Use your super hero sanitizer, keep a safe distance and advise they should keep 1.5 metres away from others.
+move away immediately call the police!
+
+You notice one of the waiters serving food is ill and handling orders at a restaurant, what do you do? - 90
+Ignore the signs, and remain oblivious or the situation
+Use reasonable logic, keep distance from the waiter and report it to management!
+
+You notice the people at the bar are re-using shot glasses for a group round of drinks, what do you do? - 80
+Approach the Group as it seems Fun, and partake in the social festivities
+Do not ignore the sign of possible contamination and report it to Management.
+
+
+
+
+Your coworker Markus, is constantly coughing in the office, what do you do? - 100
+Use your superhero Social Distance and notify your Manager.
+Keep it to yourself, do not draw attention, and pretend you did not notice!
+
+Mary from HR, send a memo advising she is ill and everyone should reach her via email, what do you do? - 90
+Use your superhero Social Distancing, notify your Manager and recommend she should be working from home.
+Email Mary to see if she needs some help, and bring her a nice warm cup of tea, so she can feel better!
+
+Your Manager Alex, tells you his partner recently came back from overseas, and is seen constantly sneezing during the day, what do you do? - 80
+Comfort your Manager, and assure him it is only natural to have a seasonal cold this time of the year.
+Use your superhero Social Distance, advise your Manager of the risk and that his partner should be seeking medical advice.

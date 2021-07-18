@@ -1,0 +1,4 @@
+#script,url,tags,depends,prerequisites,timeout_minutes,testcases
+BusGame.xlsx,https://responsivefight.herokuapp.com/,,,,,"verify objects timeout pop up,select answer,Verify wrong answer popup,Verify right answer popup,verify score,verify correct data showing,Verify right answer popup,verify score,verify no other options on scren,verify score"
+#script,url,tags,depends,prerequisites,timeout_minutes,testcases
+allGame_HappyPath.xlsx,https://responsivefight.herokuapp.com/,,,,,"verify bus game completed page,verify second answer not shown,verify office game completed msg"
