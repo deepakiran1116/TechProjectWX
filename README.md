@@ -26,3 +26,30 @@ Click on "bin" in sahi dashboard to open command line\
 type "testrunner" and enter to see different ways or running test suite OR\
 run command - testrunner techProject_Deepa\testScenarios\covidGameRegressionSuite.dd.csv https://responsivefight.herokuapp.com/ chrome\
 Click "Logs" in sahi dashboard to view logs
+
+# Framework and Test Scenario Details
+Page object model and Hybrid Framework\
+Different approaches have been taken to design test scenarios like: End to end scenarios, Data driven with fixed and dynamic data sets, simple function with parameterised data etc.\
+Different ways of test suite creation in Sahi tool has been demonstrated\
+Tagged test scenarios to run happy path or full scenario\
+To try running happy path of Bus game scenario - run below command in command line as mentioned above - \
+testrunner techProject_Deepa\testScenarios\busGame.xlsx https://responsivefight.herokuapp.com/ chrome "happy"
+
+# Known Issues
+1. User not able to create warrior in Internet explorer\
+2. First game (Danger one) is not working correctly, hence not automated\
+\
+Other issues due to which you see script failures in the logs have been reported in Defects.md file
+
+# Challenges
+## Resolved ones
+1. Handling same question with different set of answers in Bus Game\
+2. Identifying newly created warrior on Leaderboard page if more than one warrior of same name exists\
+3. Planning test scenarios
+## Unresolved ones
+1. Wrong Answer modal dialog that just shows up on screen and immediately diappears when navigating to between pages\
+2. More detailed test scenarios could not be added due to time constraints\
+3. Running the developed scripts in sahi's open source version
+
+# High level report
+![RegressionSuiteReport](https://github.com/deepakiran1116/TechProjectWX/blob/main/techProject_Deepa/techProjectReportWX.JPG)
