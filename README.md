@@ -1,6 +1,10 @@
 # TechProjectWX
 Created by Deepa Kiran on 18Jul2021
 
+# UI Automation
+Tools used: Sahi Pro\
+Language: java script\
+
 # Pre-requesites
 Java 1.6 or above\
 Sahi Pro 8.0 above
@@ -53,3 +57,18 @@ Other issues due to which you see script failures in the logs have been reported
 
 # High level report
 ![RegressionSuiteReport](https://github.com/deepakiran1116/TechProjectWX/blob/main/techProject_Deepa/techProjectReportWX.JPG)
+
+# API Automation
+Tool used: Postman\
+Tests written in: Java script\
+
+# Pre-requisites
+Download Postman [here](https://www.postman.com/downloads/)\
+Install and Open Postman\
+Download Postman collection and environment files from github\
+Navigate to File > Import\
+Import downloaded postman collection and environment\
+Run collection and see the results\
+
+# Known issues
+Delete user API is throwing 400 error code
