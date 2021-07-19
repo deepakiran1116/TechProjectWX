@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+/**
+ * Copyright Tyto Software Pvt. Ltd.
+ */
+-->
+<project name="demo" default="runtestschrome">
+	<taskdef name="sahi" classname="net.sf.sahi.ant.RunSahiTask" classpath="ant-sahi.jar"/>
+	
+	<target name="set_timestamp">
+        <tstamp>
+            <format property="ts" pattern="yyyy_MM_dd__HH_mm_ss" locale="en, IN"/>
+        </tstamp>
+	</target>
+	
+	
+	<target name="set_properties_chrome" depends="set_timestamp">
+    	<property name="scriptDir" value="testScenarios/"/>
+    	<property name="scriptName" value="covidGameRegressionSuite.dd.csv"/>
+		<property name="browser" value="chrome"/>
+		<property name="startWith" value="BROWSER"/>
+		<property name="sendemail" value="false"/>
+		<property name="emailtrigger" value="success,failure,user_aborted,aborted_timeout"/>
+		<property name="emailproperties" value=""/>
+		<property name="sendemailForSubSuite" value="false"/>
+		<property name="sendemailperiodically" value="false"/>
+		<property name="sendemailperiodicallytime" value=""/>
+		<property name="emailPasswordHidden" value="true"/>
+		<property name="baseURL" value="https://responsivefight.herokuapp.com/"/>
+		<property name="host" value="localhost"/>
+		<property name="port" value="9999"/>
+		<property name="singlesession" value="false"/>
+		<property name="threads" value="5"/>
+		<property name="abortedRetryCount" value="0"/>
+		<property name="failureRetryCount" value="0"/>
+		<property name="isAvoidSkipping" value="false"/>
+		<property name="isAutohealEnabled" value="false"/>
+		<property name="suiteTimeOut" value="0.0"/>
+		<property name="showPeriodicSummary" value="true"/>
+		<property name="failedSuiteName" value="covidGameRegressionSuite_failed_${browser}.dd.csv"/>
+		<property name="failedSuite" value="techProject_Deepa/testScenarios/${failedSuiteName}"/>
+		<property name="jsCodeCoverage" value="false"/>
+	</target>
+
+	<target name="runtestschrome" depends="set_properties_chrome">
+		<sahi suite="${scriptName}"
+			browsertype="${browser}"
+			startWith="${startWith}"
+			sendemail="${sendemail}"
+	        emailtrigger="${emailtrigger}"
+	        emailproperties="${emailproperties}"
+	        sendEmailForSubSuite="${sendemailForSubSuite}"
+	        sendEmailPeriodically="${sendemailperiodically}"
+			sendEmailPeriodicallyTime="${sendemailperiodicallytime}"
+			emailPasswordHidden="${emailPasswordHidden}"
+			baseurl="${baseURL}"
+			sahihost="${host}"
+			sahiport="${port}"
+			scriptsPathMaster="${scriptDir}"
+			failureproperty="sahi.failed.${browser}"
+			failedSuiteName="${failedSuiteName}"
+			haltonfailure="false"
+			singlesession="${singlesession}"
+			showPeriodicSummary="${showPeriodicSummary}"
+			threads="${threads}"
+			abortedRetryCount="${abortedRetryCount}"
+			failureRetryCount="${failureRetryCount}"
+			isAvoidSkipping="${isAvoidSkipping}"
+			isAutohealEnabled="${isAutohealEnabled}"
+			suiteTimeOut="${suiteTimeOut}"
+			jsCodeCoverage="${jsCodeCoverage}">
+		</sahi>
+		<antcall target="failsahichrome"/>
+	</target>
+
+    <target name="failsahichrome" depends="set_properties_chrome" if="sahi.failed.${browser}">
+        <fail message="Sahi tests failed on browser ${browser}!"/>
+    </target>		
+</project>
