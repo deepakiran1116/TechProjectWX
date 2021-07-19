@@ -1,0 +1,303 @@
+{
+	"info": {
+		"_postman_id": "c75def37-3d3f-46e1-b8c8-dc72a75136b9",
+		"name": "TechProjectAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "createUser",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var randomNum = Math.floor((Math.random() * 10) + 1);\r",
+							"var name = pm.environment.get(\"fixName\");\r",
+							"name = name+randomNum;\r",
+							"console.log(\"Name of new user: \" + name);\r",
+							"pm.environment.set(\"userName\", name);\r",
+							"var ranScore = Math.floor((Math.random() * 100) + 1);\r",
+							"console.log(\"Score of new user: \" + ranScore);\r",
+							"pm.environment.set(\"score\", ranScore);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.response.to.have.status(201);\r",
+							"const responseJson = pm.response.json();\r",
+							"pm.expect(responseJson.status).to.eql(\"success\");\r",
+							"pm.expect(responseJson.message).to.eql(\"User added.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"{{userName}}\",\r\n  \"score\": {{score}}\r\n}"
+				},
+				"url": {
+					"raw": "{{testEnvironment}}/v1/user",
+					"host": [
+						"{{testEnvironment}}"
+					],
+					"path": [
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUserId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.response.to.have.status(200);\r",
+							"//fetching user id\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"console.log(\"Total no of users: \" + jsonData.length);\r",
+							"var id, nameInResponse;\r",
+							"var count=0;\r",
+							"var createdName = pm.environment.get(\"userName\");\r",
+							"var createdScore = pm.environment.get(\"score\");\r",
+							"for (var i = 0; i < jsonData.length; i++) \r",
+							"{\r",
+							"    nameInResponse = jsonData[i].username;\r",
+							"    if (nameInResponse == createdName)\r",
+							"    {\r",
+							"        console.log(\"found\");\r",
+							"        pm.expect(jsonData[i].score).to.eql(createdScore);\r",
+							"        pm.environment.set(\"userId\",jsonData[i].user_id);\r",
+							"        count++;\r",
+							"    }\r",
+							"}\r",
+							"tests[\"success\"] = count === 1;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{testEnvironment}}/v1/user",
+					"host": [
+						"{{testEnvironment}}"
+					],
+					"path": [
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "editUserScore",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var ranScore = Math.floor((Math.random() * 100) + 1);\r",
+							"console.log(\"Edited score of user: \" + ranScore);\r",
+							"pm.environment.set(\"score\", ranScore);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(pm.response.code);\r",
+							"var code = pm.response.code;\r",
+							"tests[\"success\"] = code === 201 || code===204;\r",
+							"\r",
+							"if(code==201)\r",
+							"{\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.status).to.eql(\"success\");\r",
+							"    pm.expect(responseJson.message).to.eql(\"User added with updated score\");\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"{{userName}}\",\r\n  \"score\": {{score}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{testEnvironment}}/v1/user",
+					"host": [
+						"{{testEnvironment}}"
+					],
+					"path": [
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "verifyEditedScore",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.response.to.have.status(200);\r",
+							"//fetching user id\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"console.log(\"Total no of users: \" + jsonData.length);\r",
+							"var idInResponse;\r",
+							"var count=0;\r",
+							"var createdName = pm.environment.get(\"userName\");\r",
+							"var createdScore = pm.environment.get(\"score\");\r",
+							"var createdId = pm.environment.get(\"userId\");\r",
+							"for (var i = 0; i < jsonData.length; i++) \r",
+							"{\r",
+							"    idInResponse = jsonData[i].user_id;\r",
+							"    if (idInResponse == createdId)\r",
+							"    {\r",
+							"        console.log(\"found\");\r",
+							"        pm.expect(jsonData[i].score).to.eql(createdScore);\r",
+							"        pm.expect(jsonData[i].username).to.eql(createdName);\r",
+							"        count++;\r",
+							"    }\r",
+							"}\r",
+							"tests[\"success\"] = count === 1;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{testEnvironment}}/v1/user",
+					"host": [
+						"{{testEnvironment}}"
+					],
+					"path": [
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.response.to.have.status(200);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "delete-key",
+						"value": "{{userId}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{testEnvironment}}/v1/user",
+					"host": [
+						"{{testEnvironment}}"
+					],
+					"path": [
+						"v1",
+						"user"
+					],
+					"query": [
+						{
+							"key": "delete-key",
+							"value": "Bee11",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
